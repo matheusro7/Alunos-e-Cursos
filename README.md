@@ -14,6 +14,10 @@ Você pode verificar se tem o Node.js e npm instalados com os seguintes comandos
 ```bash
 node -v
 npm -v
+npm init -y
+npm install express
+npm install --save-dev jest
+
 Se não estiverem instalados, você pode baixar o Node.js aqui e o npm será instalado automaticamente.
 
 Instalação
@@ -187,5 +191,3 @@ Editar
 5. **Testes**: Como executar os testes do projeto usando o Jest e Supertest.
 6. **Contribuição**: Como colaborar com o projeto.
 7. **Licença**: Informações sobre a licença do projeto.
-
-Com esse `README.md`, seu projeto ficará bem documentado, facilitando a instalação, execução e colaboração.
