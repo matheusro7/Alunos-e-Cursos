@@ -11,7 +11,7 @@ Antes de executar o projeto, você precisa ter as seguintes ferramentas instalad
 
 Você pode verificar se tem o Node.js e npm instalados com os seguintes comandos:
 
-```bash
+```**bash**
 node -v
 npm -v
 npm init -y
@@ -23,26 +23,26 @@ Se não estiverem instalados, você pode baixar o Node.js aqui e o npm será ins
 Instalação
 Clone o repositório do projeto:
 
-bash
+**bash**
 Copiar
 Editar
 git clone https://github.com/SEU-USUARIO/alunoEcursos.git
 Navegue até a pasta do projeto:
 
-bash
+**bash**
 Copiar
 Editar
 cd alunoEcursos
 Instale as dependências do projeto:
 
-bash
+**bash**
 Copiar
 Editar
 npm install
 Execução do Servidor
 Após a instalação das dependências, você pode iniciar o servidor com o seguinte comando:
 
-bash
+**bash**
 Copiar
 Editar
 npm start
