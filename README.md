@@ -48,105 +48,198 @@ Editar
 npm start
 Isso iniciará o servidor na porta 3001 por padrão. Se a porta 3001 já estiver sendo usada, o servidor tentará usar a porta 3002. O servidor ficará disponível em http://localhost:3001.
 
-API
-Cursos
-1. GET /cursos
-Lista todos os cursos cadastrados.
+API - Cursos
+Testes para a Rota de Cursos
 
-Resposta: Um array com todos os cursos cadastrados.
+GET /cursos
+•	Cenário 1 (Positivo): Verificar se a lista de cursos é retornada corretamente.
+o	Requisição: GET para /cursos
+o	Resposta Esperada: 200 OK, com uma lista vazia ou com cursos cadastrados.
 
-2. POST /cursos
-Cria um novo curso.
+•	Cenário 2 (Negativo): Se não houver cursos cadastrados, a resposta deve retornar uma lista vazia.
+o	Requisição: GET para /cursos
+o	Resposta Esperada: 200 OK, com o array cursos vazio.
 
-Corpo da Requisição:
+GET /cursos/{id}
+•	Cenário 1 (Positivo): Verificar se um curso específico é retornado corretamente.
+o	Requisição: GET para /cursos/{id} onde {id} é um ID válido.
+o	Resposta Esperada: 200 OK, com os dados do curso correspondente.
 
+•	Cenário 2 (Negativo): Tentar acessar um curso que não existe.
+o	Requisição: GET para /cursos/999 (onde o curso com ID 999 não existe).
+o	Resposta Esperada: 404 NOT FOUND, com a mensagem Curso não encontrado.
+
+POST /cursos
+•	Cenário 1 (Positivo): Criar um curso com sucesso.
+o	Requisição: POST para /cursos com body:
 json
-Copiar
-Editar
+Copiar código
 {
   "nome": "Nome do Curso",
-  "cargaHoraria": 40
-}
-Resposta: O novo curso criado com o ID atribuído.
-
-3. PUT /cursos/:id
-Atualiza um curso pelo ID.
-
-Corpo da Requisição:
-
-json
-Copiar
-Editar
-{
-  "nome": "Novo Nome do Curso",
   "cargaHoraria": 60
 }
-Resposta: O curso atualizado.
+o	Resposta Esperada: 201 CREATED, com o novo curso no corpo da resposta.
 
-4. DELETE /cursos/:id
-Exclui um curso pelo ID.
-
-Resposta: Mensagem confirmando a exclusão.
-
-Alunos
-1. GET /alunos
-Lista todos os alunos cadastrados.
-
-Resposta: Um array com todos os alunos cadastrados.
-
-2. POST /alunos
-Cria um novo aluno.
-
-Corpo da Requisição:
-
+•	Cenário 2 (Negativo): Tentar criar um curso com campos ausentes.
+o	Requisição: POST para /cursos com body:
 json
-Copiar
-Editar
+Copiar código
 {
-  "nome": "Nome do Aluno",
-  "email": "aluno@mail.com"
+  "nome": "Nome do Cruso Inexistente"
 }
-Resposta: O novo aluno criado com o ID atribuído.
+o	Resposta Esperada: 400 BAD REQUEST, com a mensagem de erro: Nome e cargaHoraria (número) são obrigatórios.
 
-3. PUT /alunos/:id
-Atualiza os dados de um aluno pelo ID.
-
-Corpo da Requisição:
-
+•	Cenário 3 (Negativo): Tentar criar um curso com cargaHorária inválida.
+o	Requisição: POST para /cursos com body:
 json
-Copiar
-Editar
+Copiar código
 {
-  "nome": "Novo Nome do Aluno",
-  "email": "aluno@mail.com"
+  "nome": "Nome do Curso",
+  "cargaHoraria": "forty"
 }
-Resposta: O aluno atualizado.
+o	Resposta Esperada: 400 BAD REQUEST, com a mensagem de erro: Nome e cargaHoraria (número) são obrigatórios.
 
-4. DELETE /alunos/:id
-Exclui um aluno pelo ID.
-
-Resposta: Mensagem confirmando a exclusão.
-
-5. POST /alunos/:id/matricular
-Matricula um aluno em um curso.
-
-Corpo da Requisição:
-
+•	Cenário 4 (Negativo): Tentar criar um curso com nome duplicado.
+o	Requisição: POST para /cursos com body:
 json
-Copiar
-Editar
+Copiar código
+{
+  "nome": "Nome do Curso",
+  "cargaHoraria": 60
+}
+o	Resposta Esperada: 409 CONFLICT, com a mensagem de erro: Já existe um curso com este nome.
+
+PUT /cursos/{id}
+•	Cenário 1 (Positivo): Atualizar um curso com sucesso.
+o	Requisição: PUT para /cursos/1 com body:
+json
+Copiar código
+{
+  "nome": "Nome do Curso Avançado",
+  "cargaHoraria": 80
+}
+o	Resposta Esperada: 200 OK, com os dados atualizados do curso.
+
+•	Cenário 2 (Negativo): Tentar atualizar um curso que não existe.
+o	Requisição: PUT para /cursos/999 com body:
+json
+Copiar código
+{
+  "nome": "Nome do Curso Avançado",
+  "cargaHoraria": 60
+}
+o	Resposta Esperada: 404 NOT FOUND, com a mensagem de erro: Curso não encontrado.
+
+•	Cenário 3 (Negativo): Tentar atualizar com campos inválidos.
+o	Requisição: PUT para /cursos/1 com body:
+json
+Copiar código
+{
+  "nome": "Nome do Curso Avançado",
+  "cargaHoraria": "sixty"
+}
+o	Resposta Esperada: 400 BAD REQUEST, com a mensagem de erro: Nome e cargaHoraria (número) são obrigatórios.
+DELETE /cursos/{id}
+
+•	Cenário 1 (Positivo): Excluir um curso com sucesso.
+o	Requisição: DELETE para /cursos/1
+o	Resposta Esperada: 200 OK, com a mensagem de sucesso: Curso excluído com sucesso.
+
+•	Cenário 2 (Negativo): Tentar excluir um curso que não existe.
+o	Requisição: DELETE para /cursos/999
+o	Resposta Esperada: 404 NOT FOUND, com a mensagem de erro: Curso não encontrado.
+_____________________________________________________________________________________________________________________________
+API - Alunos
+Testes para a Rota de Alunos
+
+GET /alunos
+•	Cenário 1 (Positivo): Verificar se a lista de alunos é retornada corretamente.
+o	Requisição: GET para /alunos
+o	Resposta Esperada: 200 OK, com a lista de alunos (que pode estar vazia inicialmente).
+POST /alunos
+•	Cenário 1 (Positivo): Criar um aluno com sucesso.
+o	Requisição: POST para /alunos com body:
+json
+Copiar código
+{
+  "nome": "João Silva",
+  "email": "joao@example.com"
+}
+o	Resposta Esperada: 201 CREATED, com os dados do novo aluno.
+
+•	Cenário 2 (Negativo): Tentar criar um aluno sem nome ou email.
+o	Requisição: POST para /alunos com body:
+json
+Copiar código
+{
+  "nome": "João Silva"
+}
+o	Resposta Esperada: 400 BAD REQUEST, com a mensagem de erro: Nome e email são obrigatórios.
+PUT /alunos/{id}
+
+•	Cenário 1 (Positivo): Atualizar os dados de um aluno.
+o	Requisição: PUT para /alunos/1 com body:
+json
+Copiar código
+{
+  "nome": "João Silva Jr.",
+  "email": "joaojr@example.com"
+}
+o	Resposta Esperada: 200 OK, com os dados atualizados do aluno.
+
+•	Cenário 2 (Negativo): Tentar atualizar um aluno que não existe.
+o	Requisição: PUT para /alunos/999 com body:
+json
+Copiar código
+{
+  "nome": "João Silva Jr.",
+  "email": "joaojr@example.com"
+}
+o	Resposta Esperada: 404 NOT FOUND, com a mensagem de erro: Aluno não encontrado.
+DELETE /alunos/{id}
+•	Cenário 1 (Positivo): Excluir um aluno com sucesso.
+o	Requisição: DELETE para /alunos/1
+o	Resposta Esperada: 200 OK, com a mensagem de sucesso: Aluno excluído com sucesso.
+
+•	Cenário 2 (Negativo): Tentar excluir um aluno que não existe.
+o	Requisição: DELETE para /alunos/999
+o	Resposta Esperada: 404 NOT FOUND, com a mensagem de erro: Aluno não encontrado.
+
+POST /alunos/{id}/matricular
+•	Cenário 1 (Positivo): Matrícula de um aluno em um curso com sucesso.
+o	Requisição: POST para /alunos/1/matricular com body:
+json
+Copiar código
 {
   "cursoId": 1
 }
-Resposta: Mensagem confirmando a matrícula do aluno no curso.
+o	Resposta Esperada: 200 OK, com a mensagem de sucesso: Aluno matriculado com sucesso!
 
+•	Cenário 2 (Negativo): Matrícula de um aluno em um curso que não existe.
+o	Requisição: POST para /alunos/1/matricular com body:
+json
+Copiar código
+{
+  "cursoId": 999
+}
+o	Resposta Esperada: 404 NOT FOUND, com a mensagem de erro: Curso não encontrado.
+
+•	Cenário 3 (Negativo): Matrícula de um aluno que já está matriculado no curso.
+o	Requisição: POST para /alunos/1/matricular com body:
+json
+Copiar código
+{
+  "cursoId": 1
+}
+o	Resposta Esperada: 400 BAD REQUEST, com a mensagem de erro: Aluno já está matriculado neste curso.
+_____________________________________________________________________________________________________________________________
 Erros Comuns
 400 - Bad Request: Caso o corpo da requisição não esteja correto (ex: campos obrigatórios faltando ou tipo de dado incorreto).
 
 404 - Not Found: Caso o recurso solicitado não exista (ex: curso ou aluno com o ID não encontrado).
 
 409 - Conflict: Caso um aluno já esteja matriculado no curso.
-
+_____________________________________________________________________________________________________________________________
 Testes
 O projeto utiliza o framework de testes Jest para testar as APIs. Para rodar os testes, siga os seguintes passos:
 
