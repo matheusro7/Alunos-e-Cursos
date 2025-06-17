@@ -78,7 +78,7 @@ json
 Copiar
 Editar
 {
-  "nome": "Novo Nome",
+  "nome": "Novo Nome do Curso",
   "cargaHoraria": 60
 }
 Resposta: O curso atualizado.
@@ -104,7 +104,7 @@ Copiar
 Editar
 {
   "nome": "Nome do Aluno",
-  "idade": 20
+  "email": "aluno@mail.com"
 }
 Resposta: O novo aluno criado com o ID atribuído.
 
@@ -117,8 +117,8 @@ json
 Copiar
 Editar
 {
-  "nome": "Novo Nome",
-  "idade": 21
+  "nome": "Novo Nome do Aluno",
+  "email": "aluno@mail.com"
 }
 Resposta: O aluno atualizado.
 
